@@ -15,66 +15,54 @@
 
 ## Objective:
 
-  Elon Musk, the wealthiest man in the world with 91 M followers on Twitter, published at the beginning of April that he wanted to make the bluebird free.  
-  During the whole month of April, Elon Musk was the most exciting trend on Twitter. So we decided to make a sentiment analysis on it to:
-  * Have a more profound understanding of the sentiment concerning Elon musk buying Twitter
-  * See what the sentiment of the most reactive person ( based on the number of tweets related to the topics) was
-  * See what the sentiment of the influencer's account ( more than 500k followers) was
-  * See if his announcement on April 29th makes a difference in the general sentiment
-  * Or any other relevant information.
+  Elon Musk, the wealthiest man in the world with 91M followers on Twitter, announced that he wants to take Twitter private and make the bluebird free from investors' control. 
+
+Throughout April, Elon Musk was trending on Twitter but there was no indication whether the twitter users found acquisition news positive or negative. Hence, I decided to complete sentiment analysis on all tweets with hashtag #ElonMusk. This will help to:
+
+* Have a better understanding of the sentiment concerning Elon musk buying Twitter.
+* Understand the sentiment of the most active user (with the most tweets on this topic).
+* Understand the sentiment of influencers (more than 500k followers).
+* Decipher if his announcement about acquisition changed his popularity on Twitter.
+
   
- ## Webscrapping : 
+ ## Data Collection : 
  
- To get our data, we use:
+ To get relevant data, I used:
   * Twitter API: To access Twitter and all pieces of information.
   * Amazon Elastic Computer Cloud (EC2): Which a virtual computer that we used to host our script
   * Amazon Kinesis: To deliver streaming data
   * Amazon S3: To store data
-  * Databricks: 
  
 ![image](https://user-images.githubusercontent.com/100147405/168670368-27e20afc-f039-45c2-b692-64aa9f902d6c.png)
 
-## Cleaning: With Pyspark
+## Data Cleaning: With Pyspark
+
 * From tweets, we should remove:
-  * remove Url
-  * remove Symbol of retweet (RT @name): We should keep the text of the retweet because people comment a lot on Elon tweets or any twitter related
-  * remove Special caracter
-  * remove spaces
-  * make lowering
-  * make trimming
-* We also have to remove all tweets with no values after cleaning
-* We need to remove some useless columns such as name, id(id is unique, screen name is unique, but it can be more meaningful),user_location, user_tweet(we get a lot of missing)
+* removed Url,spaces and special characters from tweets.
+* removed retweet symbols (RT @name) to isolate content of the tweet: We should keep the text of the retweet because people comment a lot on Elon tweets or any twitter related
+* removed some useless columns such as name, id(id is unique, screen name is unique, but it can be more meaningful),user_location, user_tweet(we get a lot of missing)
 
-## Get sentiment: TextBlob
-Use the the python library called textblob
-https://textblob.readthedocs.io/en/dev/
+## Machine Learning: 
 
+* Completed sentiment analysis using Textblob (https://textblob.readthedocs.io/en/dev/).
+* Used Pyspark to populate predictions.
+* Used tokenizer to remove stop words.
+* Used TF-IDF vectorization to count different words used.
+* Used Linear Regression with 97.97% score.
 
-## Machine Learning: Getting the predictions - Pyspark
-
-* Features transformation:Tokenizer
-* Features transformation: Remove Stop words
-* Features transformation: Count Vectorizer
-* Features transformation: TF-IDF Vectorization
-* Labeling
-* Linear Regression
-* Scoring: 97.97%
 
 ![image](https://user-images.githubusercontent.com/100147405/168660792-492be21a-510c-4ec9-be3a-abadc450ac5e.png)
 
-## Athena: 
+Data Analysis and Visualizations:
+* Used AWS Athena to run SQL queries on data.
+* Used Quicksight to make visualizations. 
 
-We run some sql queries on Athena to get differents views on our predictions 
-
-## Quicksight:
-
-We use quicksight to make visualizations present in the .pptx files. 
-
-## Findings: 
-
-* The sentiment was overall Neutral (48%), then Positive(38%), and Negative (14%), which was a real surprise for me, who saw a lot of emotional reactions on Twitter.
-* The account which reacted the most had a neutral sentiment. So we decided to go forward and found that they were suspended. We can guess that they were bots. That means that we have a lot of Bot on Twitter
-* For the account with more than 500k followers, the sentiment was Neutral and Positive. It was primarily daily news like the Times...  
-* As excepted, On April 29 th, we got more reactions on the topic. People also used to react between 9 pm to 02 am  
+Findings:
+* 48% of the twitters had neutral sentiment, followed by positive (38%) and negative (14%). It was a real surprise for me as I see a lot of emotional reactions on Twitter. Neutral sentiment would mean that about half of the tweets were intended to share information rather than reacting to it.
+* The most active user on this topic had a neutral sentiment towards the announcement. Further analysis showed that the account was suspended. I am assuming that it was a bot account.
+* Influencer accounts had a mixed response with both neutral and positive sentiment. Some of these accounts were daily news channels like Times which explains their neutral stance.
+* As expected, he did become popular on Twitter as a result of this announcement. 
+* Most tweets about this topic were posted between 9pm and 2am EST.  
+  
 
 
